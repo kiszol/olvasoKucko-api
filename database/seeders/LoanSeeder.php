@@ -12,6 +12,14 @@ class LoanSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $book = Book::first();
+        if ($book != null  && $book->available_copies > 0) {
+            Loan::create([
+                'book_id' => $book->id,
+                'borrower_name' => 'Hűvösvölgyi Ronáldó Attila',
+            ]);
+            $book->decrement('available_copies');
+        }
+        Loan::factory()->count(5)->create();
     }
 }
